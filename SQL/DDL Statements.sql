@@ -38,14 +38,14 @@ CREATE TABLE establishments (
     outdoor_number 		int 			NOT NULL,
     phone_number 		varchar(20)		NOT NULL,
     email 				nvarchar(30) 	NOT NULL,
-	CONSTRAINT PK_Id_Establishment PRIMARY KEY (establishment_id),
+	CONSTRAINT PK_Id_Establishment 		PRIMARY KEY (establishment_id),
     CONSTRAINT FK_Id_City_Establishment FOREIGN KEY (city_id) REFERENCES cities (city_id)
 );
 
 CREATE TABLE users(
 	user_id 			int 			NOT NULL AUTO_INCREMENT,
     preferred_store 	int,
-    client_id 			int 			NOT NULL UNIQUE,
+    client_id 			int 			NOT NULL UNIQUE, #Crear trigger para el cliente id
     first_name 			nvarchar(40) 	NOT NULL,
     last_name 			nvarchar(40) 	NOT NULL,
     gender 				varchar(2) 		NOT NULL check(gender="M" or gender="F" or gender="NB" or gender="NA"),
@@ -54,6 +54,19 @@ CREATE TABLE users(
     street 				nvarchar(50) 	NOT NULL,
     interior_number 	int				NOT NULL,
     outdoor_number 		int 			NOT NULL,
-    CONSTRAINT PK_Id_User PRIMARY KEY (user_id),
+    CONSTRAINT PK_Id_User 				PRIMARY KEY (user_id),
     CONSTRAINT FK_Id_Establishment_User FOREIGN KEY (preferred_store) REFERENCES establishments (establishment_id)
 );
+
+CREATE TABLE accounts(
+	account_id			int 			NOT NULL AUTO_INCREMENT,
+    user_id				int				UNIQUE, #Valor único para que solo haya usuario por cuenta, relación uno a uno
+	username 			nvarchar(20) 	NOT NULL UNIQUE,
+    email 				nvarchar(50) 	NOT NULL UNIQUE,
+    password 			nvarchar(100) 	NOT NULL,
+    active				bool			NOT NULL DEFAULT false,
+    CONSTRAINT PK_Id_Account PRIMARY KEY (account_id),
+    CONSTRAINT FK_Id_User_Account FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+
