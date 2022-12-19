@@ -134,6 +134,8 @@ CREATE TABLE orders(
 									order_status='Canceled' or order_status='Completed' or order_status='Other')
 );
 
+
+#Crear un trigger para que cuando se complete una orden se actualize el inventario
 CREATE TABLE orders_detail(
 	order_detail_id 	int NOT NULL AUTO_INCREMENT,
     product_id 			int NOT NULL,
@@ -144,4 +146,15 @@ CREATE TABLE orders_detail(
     CONSTRAINT FOREIGN KEY FK_Id_Product_Order_Detail (product_id) 		REFERENCES products (product_id),
     CONSTRAINT FOREIGN KEY FK_Id_Provider_Order_Detail (provider_id) 	REFERENCES providers (provider_id),
     CONSTRAINT FOREIGN KEY FK_Id_Order_Order_Detail (order_id) 			REFERENCES orders (order_id)
-)
+);
+
+
+CREATE TABLE inventory(
+	inventory_id int NOT NULL AUTO_INCREMENT,
+    establishment_id int NOT NULL,
+    product_id int NOT NULL,
+    stock float NOT NULL,
+    CONSTRAINT PRIMARY KEY PK_Id_Inventory (inventory_id),
+    CONSTRAINT FOREIGN KEY FK_Id_Establishment_Inventory (establishment_id) REFERENCES establishments (establishment_id),
+    CONSTRAINT FOREIGN KEY FK_Id_Product_Inventory (product_id) REFERENCES products (product_id)
+);
