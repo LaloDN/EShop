@@ -1,4 +1,4 @@
-# Project currently on develepment (paused)!
+# Project currently on development! (paused)
 
 ## Summary
 The main purppose of this project is put my programming abilities to create an full stack application from scratch: making the database design, choosing the project architectures, design patterns, implement my own solutions, etc.
